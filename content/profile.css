@@ -1,0 +1,31 @@
+/* 抖美 — 我的页（个人主页）：深色 + 视频网格统一圆角卡片
+   选择器以 data-e2e 测试锚点优先；带「待实测校准」标记的规则在浏览器实测后微调 */
+
+html.dyb-profile body {
+  background: var(--dyb-bg) !important;
+}
+
+/* 头部信息区与选项卡底色 */
+html.dyb-profile #douyin-right-container {
+  background: var(--dyb-bg) !important;
+}
+
+/* ===== 作品网格：统一圆角卡片 =====
+   待实测校准：抖音个人主页作品列表的容器锚点 */
+html.dyb-profile [data-e2e="user-post-list"] li,
+html.dyb-profile ul[data-e2e="user-post-list"] > li {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.16s ease-out, box-shadow 0.16s ease-out;
+}
+html.dyb-profile [data-e2e="user-post-list"] li:hover,
+html.dyb-profile ul[data-e2e="user-post-list"] > li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  outline: 1px solid rgba(254, 44, 85, 0.45);
+}
+
+/* 网格间距统一（待实测校准） */
+html.dyb-profile [data-e2e="user-post-list"] {
+  gap: 16px;
+}
