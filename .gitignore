@@ -1,0 +1,11 @@
+# 本地产物
+package/
+*.zip
+
+# ZCode 会话数据
+.zcode/
+
+# 系统文件
+Thumbs.db
+.DS_Store
+archive/
