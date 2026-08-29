@@ -1,0 +1,158 @@
+/* 抖美 — 主题层（theme.css）v1.0.1
+   v1.0.1 变更：移除对 body / 导航 / 主内容列的硬刷黑与抽屉接管
+   （现行版抖音布局下会遮挡内容、破坏浅色前景对比度）。
+   保留：设计令牌、color-scheme、界面净化（display:none，无对比度风险）、去毛玻璃。
+   分层：① 扩展令牌 ② Semi Design 令牌覆盖 ③ 界面净化 ④ 性能
+   全部规则挂在 html.dyb-on 下：弹窗关闭对应页面开关 → 样式完全失效、原版还原 */
+
+/* ① 扩展令牌（皮肤系统的变量层：JS 可按预设/自定义改写 --dyb-skin-* 与 --dyb-accent） */
+html.dyb-on {
+  --dyb-bg: #0f0f12;
+  --dyb-bg-card: #1a1a1f;
+  --dyb-bg-float: #1c1c22;
+  --dyb-text-1: #e8e8ea;
+  --dyb-text-2: #9a9aa2;
+  --dyb-text-3: #6b6b73;
+  --dyb-accent: #fe2c55;
+  --dyb-line: rgba(255, 255, 255, 0.07);
+}
+
+/* ② Semi Design 令牌覆盖（抖音 web 组件库的设计令牌；数值全部经皮肤变量中转） */
+html.dyb-on {
+  --dyb-skin-bg0: #0f0f12;
+  --dyb-skin-bg1: #131317;
+  --dyb-skin-bg2: #1a1a1f;
+  --dyb-skin-bg3: #1c1c22;
+  --dyb-skin-bg4: #232329;
+  --dyb-skin-text0: #e8e8ea;
+  --dyb-skin-text1: #b9b9c0;
+  --dyb-skin-text2: #9a9aa2;
+  --semi-color-bg-0: var(--dyb-skin-bg0);
+  --semi-color-bg-1: var(--dyb-skin-bg1);
+  --semi-color-bg-2: var(--dyb-skin-bg2);
+  --semi-color-bg-3: var(--dyb-skin-bg3);
+  --semi-color-bg-4: var(--dyb-skin-bg4);
+  --semi-color-text-0: var(--dyb-skin-text0);
+  --semi-color-text-1: var(--dyb-skin-text1);
+  --semi-color-text-2: var(--dyb-skin-text2);
+  --semi-color-fill-0: rgba(255, 255, 255, 0.05);
+  --semi-color-fill-1: rgba(255, 255, 255, 0.08);
+  --semi-color-fill-2: rgba(255, 255, 255, 0.12);
+  --semi-color-border: rgba(255, 255, 255, 0.08);
+  --semi-color-primary: var(--dyb-accent);
+  --semi-color-primary-hover: var(--dyb-accent);
+  --semi-color-primary-active: var(--dyb-accent);
+  color-scheme: dark;
+}
+
+/* ③ 界面净化 */
+
+/* 导航黑名单（main.js 文字匹配后加类；挂在 dyb-on 下，开关关闭自动还原） */
+html.dyb-on .dyb-nav-hidden {
+  display: none !important;
+}
+
+/* href 模式兜底（由业务路由决定，跨版本稳定） */
+html.dyb-on a[href*="live.douyin.com/?from_nav="],
+html.dyb-on a[href^="/vs"],
+html.dyb-on a[href*="/series"],
+html.dyb-on a[href*="/microgame"],
+html.dyb-on a[href*="/aisearch"] {
+  display: none !important;
+}
+
+/* 活动浮窗 / 红包 / 抽奖（社区脚本长期验证的稳定 ID） */
+html.dyb-on #short_touch_land_redpacket_land,
+html.dyb-on #lottery_close_cotainer,
+html.dyb-on #btn-feelgood {
+  display: none !important;
+}
+
+/* IM 悬浮弹窗 */
+html.dyb-on [data-e2e="im-dialog"] {
+  display: none !important;
+}
+
+/* aria 语义锚点净化（下载引导浮窗、客服气泡等；语义属性跨构建稳定） */
+html.dyb-on [aria-label*="下载抖音"],
+html.dyb-on [aria-label*="打开抖音"],
+html.dyb-on [aria-label*="扫码下载"],
+html.dyb-on [aria-label*="客服"] {
+  display: none !important;
+}
+
+/* 红点角标（右上角头像旁的未读红点等；不动左侧带数字的计数角标） */
+html.dyb-on [class*="reddot"],
+html.dyb-on [class*="red-dot"],
+html.dyb-on [class*="badge-dot"],
+html.dyb-on [class*="dot-badge"] {
+  display: none !important;
+}
+
+/* class 名含 download 的引导/下载组件（左下角"下载抖音精选"悬浮按钮等） */
+html.dyb-on [class*="ownload"] {
+  display: none !important;
+}
+
+/* ⑤ 播放器净化与细节（2026-08 实测锚点：data-e2e + xgplayer 标准类） */
+
+/* 充钻石按钮：data-e2e 实测指向它；CSS 先行隐藏（零延迟，不等 JS 扫描） */
+html.dyb-on [data-e2e="something-button"] {
+  display: none !important;
+}
+
+/* 右缘上下切换箭头（滚轮即可切换；候选选择器，未命中则自动无效果） */
+html.dyb-on [data-e2e="feed-switch-button"],
+html.dyb-on [class*="switch-btn"],
+html.dyb-on [class*="switchBtn"],
+html.dyb-on [class*="switch_button"],
+html.dyb-on [class*="feedSwitch"] {
+  display: none !important;
+}
+
+/* 章节提示条（"章节要点 / 下一章"悬浮条，干扰观看） */
+html.dyb-feed [data-e2e="chapter-container"] {
+  display: none !important;
+}
+
+/* 进度条：2px 强调色，hover 加粗（xgplayer 标准类，类名不匹配则自动无效果） */
+html.dyb-feed .xgplayer-progress {
+  height: 2px !important;
+}
+html.dyb-feed .xgplayer-progress:hover {
+  height: 4px !important;
+}
+html.dyb-feed .xgplayer-played {
+  background: var(--dyb-accent) !important;
+}
+
+/* ⑥ 全局细节打磨（不改变任何布局结构） */
+html.dyb-on ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+html.dyb-on ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+}
+html.dyb-on ::-webkit-scrollbar-track {
+  background: transparent;
+}
+html.dyb-on ::selection {
+  background: rgba(254, 44, 85, 0.4);
+}
+
+/* 侧栏条目圆润 hover（槽位类名为实测锚点，失效则自动无效果） */
+html.dyb-on #douyin-navigation .kCzNsmN5 {
+  border-radius: 10px;
+  transition: background 0.16s ease-out;
+}
+html.dyb-on #douyin-navigation .kCzNsmN5:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ④ 性能：去掉大范围毛玻璃（GPU 占用大头；仅视觉层面，不影响任何功能） */
+html.dyb-on [style*="backdrop-filter"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
